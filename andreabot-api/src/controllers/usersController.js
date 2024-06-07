@@ -15,7 +15,7 @@ const login = (req, res) => {
         }
 
         if(result.activo === 0) {
-            res.status(403).send({ status: "401", message: "Usuario restringido"});
+            res.status(401).send({ status: "401", message: "Usuario restringido"});
             return;
         }
 

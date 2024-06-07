@@ -5,18 +5,19 @@ const pool = require('./config');
 const getAllUsersEncuestas = async () => {
     try {
         const result = await pool.query(`
-    SELECT 
-    	usr.idusuario AS id_usuario,
-    	rr.apellido_paterno, 
-    	rr.apellido_materno, 
-    	rr.nombre, 
-    	COUNT(r.responsable_red_usuario_idusuario) AS total_capturas,
-    	usr.activo
-    FROM \`andreabot-db\`.responsable_red rr
-    LEFT JOIN  \`andreabot-db\`.red r ON rr.usuario_idusuario = r.responsable_red_usuario_idusuario
-    LEFT JOIN \`andreabot-db\`.usuario usr ON rr.usuario_idusuario = usr.idusuario
-    GROUP BY id_usuario
-    ORDER BY total_capturas DESC;;
+        SELECT 
+            	usr.idusuario AS id_usuario,
+            	rr.apellido_paterno, 
+            	rr.apellido_materno, 
+            	rr.nombre, 
+            	COUNT(r.responsable_red_usuario_idusuario) AS total_capturas,
+            	usr.activo,
+                MAX(r.fecha_captura) AS ultima_captura
+        FROM \`andreabot-db\`.usuario usr
+        LEFT JOIN \`andreabot-db\`.responsable_red rr ON rr.usuario_idusuario = usr.idusuario
+        LEFT JOIN \`andreabot-db\`.red r ON r.responsable_red_usuario_idusuario = usr.idusuario
+        GROUP BY id_usuario
+        ORDER BY total_capturas DESC;
         `);
         return result[0];
     }
@@ -27,9 +28,41 @@ const getAllUsersEncuestas = async () => {
 
 }
 
-const getAllEncuestas = async () => {
+const getAllEncuestas = async (filtro) => {
     try {
-        const result = await pool.query('SELECT * FROM red');
+        if (filtro.origen && filtro.lider) {
+            const result = await pool.query(`
+            SELECT 
+            	r.*,
+                l.*
+            FROM \`andreabot-db\`.lider l
+            JOIN \`andreabot-db\`.responsable_red rr ON l.idlider = rr.lider_idlider
+            JOIN \`andreabot-db\`.red r ON rr.usuario_idusuario = r.responsable_red_usuario_idusuario
+            WHERE l.origen_idorigen = ? AND l.idlider = ?;
+            `, [filtro.origen, filtro.lider]);
+            return result[0];
+        }
+        
+        if (filtro.origen) {
+            const result = await pool.query(`
+            SELECT 
+            	r.*,
+                l.*
+            FROM \`andreabot-db\`.lider l
+            JOIN \`andreabot-db\`.responsable_red rr ON l.idlider = rr.lider_idlider
+            JOIN \`andreabot-db\`.red r ON rr.usuario_idusuario = r.responsable_red_usuario_idusuario
+            WHERE l.origen_idorigen = ?;
+            `, [filtro.origen]);
+            return result[0];
+        }
+        const result = await pool.query(`
+        SELECT 
+        	r.*,
+            l.*
+        FROM \`andreabot-db\`.lider l
+        JOIN \`andreabot-db\`.responsable_red rr ON l.idlider = rr.lider_idlider
+        JOIN \`andreabot-db\`.red r ON rr.usuario_idusuario = r.responsable_red_usuario_idusuario;
+        `);
         return result[0];
     }
     catch (error) {
@@ -145,6 +178,22 @@ const deactivateUser = async (id) => {
     }
 };
 
+const updateUser = async (updateUser) => {
+    try {
+        const [result] = await pool.query('UPDATE usuario SET pass = ? WHERE idusuario = ?', [updateUser.pass, updateUser.id]);
+        if (result.affectedRows === 0) { return { status: 404, output: "Usuario no encontrado" }; }
+        return { "info": result.info };
+    }
+    catch {
+        console.error('Error al actualizar usuario por ID:', error);
+        if (error.code === 'ER_NO_REFERENCED_ROW_2' || error.code === 'ER_TRUNCATED_WRONG_VALUE') {
+            return { status: 400, output: error.code };
+        }
+        return { status: 500, output: error };
+    
+    }
+};
+
 module.exports = {
     getAllUsersEncuestas,
     getAllEncuestas,
@@ -154,5 +203,6 @@ module.exports = {
     addUser,
     addLider,
     addOrigin,
-    deactivateUser
+    deactivateUser,
+    updateUser
 }

@@ -6,8 +6,14 @@ const getAllUsersEncuesta = async () => {
     return allUsers;
 };
 
-const getAllEncuestas = async () => {
-    const allEncuestas = await Admin.getAllEncuestas();
+const getAllEncuestas = async (req) => {
+    //TODO: Validar campos y quitar espacios al inicio y final
+    const filtro = {
+        origen: req.query.origen || null,
+        lider: req.query.lider || null,
+        responsable: req.query.responsable || null,
+    }
+    const allEncuestas = await Admin.getAllEncuestas(filtro);
     return allEncuestas;
 };
 
@@ -18,7 +24,7 @@ const getAllSupervisores = async () => {
 
 const createUser = async (req, res) => {
     //TODO: Validar campos y quitar espacios al inicio y final
-    
+
     const salt = await bcrypt.genSalt(10);
     const hashedPass = await bcrypt.hash(req.body.pass, salt);
 
@@ -55,6 +61,18 @@ const deactivateUser = async (id) => {
     return deletedUser;
 };
 
+const updateUser = async (req, res) => {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPass = await bcrypt.hash(req.body.pass, salt);
+
+    const updateUser = {
+        id: req.body.id,
+        pass: hashedPass,
+    }
+    const updatedUser = await Admin.updateUser(updateUser);
+    return updatedUser;
+};
+
 module.exports = {
     getAllUsersEncuesta,
     getAllEncuestas,
@@ -62,5 +80,6 @@ module.exports = {
     createUser,
     createLider,
     createOrigin,
-    deactivateUser
+    deactivateUser,
+    updateUser
 };

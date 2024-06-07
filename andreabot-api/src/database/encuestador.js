@@ -83,7 +83,12 @@ const uploadDataResponsable = async (datos) => {
 const getResponsableById = async (id) => {
     try {
         const result = await pool.query(`
-        SELECT * FROM responsable_red WHERE usuario_idusuario = ?
+        SELECT 
+        	rr.*,
+            l.origen_idorigen
+        FROM \`andreabot-db\`.responsable_red rr
+        LEFT JOIN \`andreabot-db\`.lider l ON l.idlider = rr.lider_idlider
+        WHERE rr.usuario_idusuario = ?;
     `, [id]);
 
         if (result[0].length === 0) {

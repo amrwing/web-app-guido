@@ -1,0 +1,12 @@
+runtime: nodejs20 
+
+instance_class: F1
+
+# Configuración de la aplicación
+handlers:
+  - url: /.*
+    script: auto
+    secure: always
+
+
+
