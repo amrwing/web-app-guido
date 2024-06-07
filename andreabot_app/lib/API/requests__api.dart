@@ -7,8 +7,7 @@ import 'package:http/http.dart' as http;
 
 abstract class ApiRequests {
   static Future<dynamic> logIn(String usuario, String password) async {
-    await dotenv.load(fileName: '.env');
-
+    await dotenv.load(fileName: 'dotenv');
     String urlApi = dotenv.env['URL_API_LOGIN']!;
     final url = Uri.parse(urlApi);
     final response = await http.post(
@@ -41,7 +40,7 @@ abstract class ApiRequests {
   }
 
   static Future<bool> createUser(Usuario usuario) async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'dotenv');
 
     String urlApi = dotenv.env['URL_API_ADMIN_CREATE_USER']!;
     final url = Uri.parse(urlApi);
@@ -75,7 +74,7 @@ abstract class ApiRequests {
   }
 
   static Future<bool> createOrigen(String nuevoOrigen) async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'dotenv');
 
     String urlApi = dotenv.env['URL_API_ADMIN_CREATE_ORIGIN']!;
     final url = Uri.parse(urlApi);
@@ -108,7 +107,7 @@ abstract class ApiRequests {
 
   static Future<bool> createLider(
       String origenSeleccionado, String nombreLider, String telefono) async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'dotenv');
 
     String urlApi = dotenv.env['URL_API_ADMIN_CREATE_LIDER']!;
     final url = Uri.parse(urlApi);
@@ -142,7 +141,7 @@ abstract class ApiRequests {
   }
 
   static Future<dynamic> getAllResponsablesDeRed() async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'dotenv');
 
     String urlApi = dotenv.env['URL_API_ADMIN_ALL_USERS']!;
     final url = Uri.parse(urlApi);
@@ -170,7 +169,7 @@ abstract class ApiRequests {
   }
 
   static Future<dynamic> getAllSupervisores() async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'dotenv');
 
     String urlApi = dotenv.env['URL_API_ADMIN_ALL_SUPERVISORS']!;
     final url = Uri.parse(urlApi);
@@ -200,7 +199,7 @@ abstract class ApiRequests {
 
 //{"status":"200","message":"Origenes obtenidos","data":{"status":200,"output":[{"idorigen":"Fundacion Andrhani "},{"idorigen":"Rancho Perez"}]}}
   static Future<dynamic> getAllOriginsNames() async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'dotenv');
 
     String urlApi = dotenv.env['URL_API_ADMIN_ALL_ORIGINS']!;
     final url = Uri.parse(urlApi);
@@ -229,7 +228,7 @@ abstract class ApiRequests {
 
 //{"status":"404","message":"No se encontraron lideres","data":{"status":404,"output":{"message":"No se encontro el lider"}}}
   static Future<dynamic> getAllLideresPorOrigen(String origen) async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'dotenv');
 
     String urlApi = dotenv.env['URL_API_ENCUESTADOR_ALL_LIDER_BY_ORIGIN']!;
     final url = Uri.parse("$urlApi/?origen=$origen");
@@ -258,7 +257,7 @@ abstract class ApiRequests {
   }
 
   static Future<bool> deleteUsuario(String idUsuario) async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'dotenv');
 
     String urlApi = dotenv.env['URL_API_DELETE_ENCUESTADOR']!;
     final url = Uri.parse(urlApi);
@@ -291,7 +290,7 @@ abstract class ApiRequests {
   }
 
   static Future<bool> uploadEncuestadorInfo(Map<String, dynamic> datos) async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'dotenv');
 
     String urlApi = dotenv.env['URL_API_UPLOAD_ENCUESTADOR_INFO']!;
     final url = Uri.parse(urlApi);
@@ -322,7 +321,7 @@ abstract class ApiRequests {
   }
 
   static Future<bool> updateEncuestadorInfo(Map<String, dynamic> datos) async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'dotenv');
 
     String urlApi = dotenv.env['URL_API_UPDATE_ENCUESTADOR_INFO']!;
     final url = Uri.parse(urlApi);
@@ -354,7 +353,7 @@ abstract class ApiRequests {
 
   static Future<bool> updateEncuestadorPassword(
       Map<String, dynamic> datos) async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'dotenv');
 
     String urlApi = dotenv.env['URL_API_UPDATE_USER_PASSWORD']!;
     final url = Uri.parse(urlApi);
@@ -385,7 +384,7 @@ abstract class ApiRequests {
   }
 
   static Future<bool> uploadEncuesta(Map<String, dynamic> datos) async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'dotenv');
 
     String urlApi = dotenv.env['URL_API_UPLOAD_ENCUESTA']!;
     final url = Uri.parse(urlApi);
@@ -417,7 +416,7 @@ abstract class ApiRequests {
 
   static Future<dynamic> getAllResponsablesFiltradosOrigenLider(
       String origen, String lider) async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'dotenv');
 
     String urlApi = dotenv.env['URL_API_ADMIN_ALL_USERS']!;
 
@@ -446,7 +445,7 @@ abstract class ApiRequests {
 
   static Future<dynamic> getAllEncuestasFiltradasOrigenLider(
       String origen, String lider) async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'dotenv');
 
     String urlApi = dotenv.env['URL_API_GET_ALL_ENCUESTAS']!;
 
@@ -476,7 +475,7 @@ abstract class ApiRequests {
   }
 
   static Future<bool> verificacionDeRegistroHecho(String encuestador) async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'dotenv');
 
     String urlApi = dotenv.env['URL_API_GET_ENCUESTADOR_INFO']!;
 
@@ -542,7 +541,7 @@ abstract class ApiRequests {
   }
 
   static Future<dynamic> getAllEncuestas() async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'dotenv');
 
     String urlApi = dotenv.env['URL_API_GET_ALL_ENCUESTAS']!;
 
@@ -570,7 +569,7 @@ abstract class ApiRequests {
   }
 
   static Future<dynamic> getAllEncuestasOrigen(String origen) async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'dotenv');
 
     String urlApi = dotenv.env['URL_API_GET_ALL_ENCUESTAS']!;
 
@@ -599,7 +598,7 @@ abstract class ApiRequests {
 
   static Future<dynamic> getAllEncuestasOrigenLider(
       String origen, String lider) async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'dotenv');
 
     String urlApi = dotenv.env['URL_API_GET_ALL_ENCUESTAS']!;
 
@@ -627,7 +626,7 @@ abstract class ApiRequests {
   }
 
   static Future<dynamic> getAllDistritosYEncuestas() async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'dotenv');
 
     String urlApi = dotenv.env['URL_API_GET_DISTRITOS_Y_ENCUESTAS']!;
 
@@ -655,7 +654,7 @@ abstract class ApiRequests {
   }
 
   static Future<dynamic> getAllResponsablesByDistrito(String distrito) async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'dotenv');
 
     String urlApi = dotenv.env['URL_API_GET_RESPONSABLES_BY_DISTRITIO']!;
 
