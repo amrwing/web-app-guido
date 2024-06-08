@@ -1,0 +1,115 @@
+-- phpMyAdmin SQL Dump
+-- version 5.0.2
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 14-06-2022 a las 20:27:38
+-- Versión del servidor: 10.4.11-MariaDB
+-- Versión de PHP: 7.4.5
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+--
+-- Base de datos: `nutrifr`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `calorias`
+--
+
+CREATE TABLE `calorias` (
+  `ID` int(50) NOT NULL,
+  `Peso` varchar(50) NOT NULL,
+  `Sexo` varchar(50) NOT NULL,
+  `ActividadFisica` varchar(50) NOT NULL,
+  `Calorias` varchar(50) NOT NULL,
+  `ProteinasNecesarias` varchar(50) NOT NULL,
+  `GrasasNecesarias` varchar(50) NOT NULL,
+  `CarbohidratosNecesarios` varchar(50) NOT NULL,
+  `Fecha` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `calorias`
+--
+
+INSERT INTO `calorias` (`ID`, `Peso`, `Sexo`, `ActividadFisica`, `Calorias`, `ProteinasNecesarias`, `GrasasNecesarias`, `CarbohidratosNecesarios`, `Fecha`) VALUES
+(1, '90', 'Hombre', 'Actividad moderada', '3348', '209.25', '93', '418.5', ''),
+(1, '100', 'Mujer', 'Sedentario', '2592', '97.2', '100.8', '324', '1313/0606/22222222'),
+(1, '100', 'Mujer', 'Sedentario', '2592', '97.2', '100.8', '324', '13/06/22'),
+(2, '72', 'Hombre', 'Sedentario', '2073.6', '77.76', '80.64', '259.2', '14/06/22'),
+(2, '70', 'Hombre', 'Actividad intensa', '2898', '217.35', '64.4', '362.25', '14/06/22'),
+(2, '70', 'Hombre', 'Actividad intensa', '2898', '217.35', '64.4', '362.25', '14/06/22'),
+(2, '80', 'Hombre', 'Sedentario', '2304', '86.4', '89.6', '288', '14/06/22');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `datospersonales`
+--
+
+CREATE TABLE `datospersonales` (
+  `ID` int(11) NOT NULL,
+  `Usuario` varchar(50) NOT NULL,
+  `Email` varchar(50) NOT NULL,
+  `Contraseña` varchar(50) NOT NULL,
+  `País` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `datospersonales`
+--
+
+INSERT INTO `datospersonales` (`ID`, `Usuario`, `Email`, `Contraseña`, `País`) VALUES
+(1, 'Fer', 'fer@gmail.com', '1234', 'México'),
+(2, 'Rene', 'rene@gmail.com', '123', 'México');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `imc`
+--
+
+CREATE TABLE `imc` (
+  `ID` int(50) NOT NULL,
+  `Peso` varchar(50) NOT NULL,
+  `Estatura` varchar(50) NOT NULL,
+  `IMC` varchar(50) NOT NULL,
+  `Fecha` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `imc`
+--
+
+INSERT INTO `imc` (`ID`, `Peso`, `Estatura`, `IMC`, `Fecha`) VALUES
+(1, '90', '180', '27.7', ''),
+(1, '90', '180', '27.7', '1313/0606/22222222'),
+(1, '90', '180', '27.7', '13/06/22'),
+(1, '70', '175', '22.8', '14/06/22'),
+(1, '70', '175', '22.8', '14/06/22');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `datospersonales`
+--
+ALTER TABLE `datospersonales`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `datospersonales`
+--
+ALTER TABLE `datospersonales`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+COMMIT;
